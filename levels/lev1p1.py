@@ -4,13 +4,15 @@ from PPlay.sprite import *
 from PPlay.gameimage import *
 
 
-def ground_colliding(character_matrix, ground):
+"""def ground_colliding(character_matrix, ground):
     colliding = False
     for line in character_matrix:
         for spr in line:
             if spr.collided_perfect(ground):
                 colliding = True
-    return colliding
+    return colliding"""
+
+
 
 
 def play_lev1p1(character_matrix, enemy1_matrix):
@@ -25,11 +27,10 @@ def play_lev1p1(character_matrix, enemy1_matrix):
 
     # pinks
     pink_ground_lev1p1 = Sprite("images\\pink_ground_lev1p1.png")
-    pink_ground_lev1p1.y = 500
+    pink_ground_lev1p1.y = 540
 
     # game images
     ground_lev1p1 = GameImage("images\\ground_lev1p1.png")
-    ground_lev1p1.y -= 30
     background_lev1p1 = GameImage("images\\background_lev1p1.jpg")
 
 
@@ -65,7 +66,7 @@ def play_lev1p1(character_matrix, enemy1_matrix):
     for i in enemy1_matrix:
         for j in i:
             j.x = 500
-            j.y = 405
+            j.y = 425
 
 
     enemy1_life = 2
@@ -82,7 +83,7 @@ def play_lev1p1(character_matrix, enemy1_matrix):
     # ///-----projectiles settings-----///
     mage_fire = Sprite("images\\fire1.png")
     shoots = []
-    shoot_v = 200
+    shoot_v = 250
     shoot_crono = 0
 
     # ///-----enemy1 projectiles settings-----///
@@ -143,23 +144,32 @@ def play_lev1p1(character_matrix, enemy1_matrix):
                 enemy1_looking_right = False
 
         # ///-----gravity-----///
-        if not ground_colliding(character_matrix, pink_ground_lev1p1) and not jumping:
+        """if not ground_colliding(character_matrix, pink_ground_lev1p1) and not jumping:
             for i in character_matrix:
                 for j in i:
                     j.y += player_speed_y
                     player_speed_y += gravity
 
         if ground_colliding(character_matrix, pink_ground_lev1p1):
+            player_speed_y = 0"""
+
+        if character_matrix[0][0].y + character_matrix[0][0].height < pink_ground_lev1p1.y and not jumping:
+            for i in character_matrix:
+                for j in i:
+                    j.y += player_speed_y
+                    player_speed_y += gravity
+
+        if character_matrix[0][0].y + character_matrix[0][0].height >= pink_ground_lev1p1.y and not jumping:
             player_speed_y = 0
 
         # ///-----jump-----///
         crono_jump += window_1_1.delta_time()
-        if keyboard_1_1.key_pressed("SPACE") and crono_jump > 1.0:
+        if keyboard_1_1.key_pressed("SPACE") and crono_jump > 0.7:
             crono_jump = 0
             jumping = True
         
         if jumping and player_speed_y == 0 and crono_jump < 0.2:
-            player_speed_y = 40 * 0.01
+            player_speed_y = 50 * 0.01
             initial_jump_y = character_matrix[0][0].y
 
         if jumping:
@@ -192,6 +202,12 @@ def play_lev1p1(character_matrix, enemy1_matrix):
         for i in character_matrix:
             for j in i:
                 j.update()
+
+        """# character positioning
+        for i in character_matrix:
+                for j in i:
+                    j.x = character_matrix[0][0].x
+                    j.y = character_matrix[0][0].y"""
 
 
         if enemy1_life > 0:

@@ -31,10 +31,10 @@ while True:
     menu.draw_text('Press "G" to start!', 100, 200, 42, (255, 255, 255))
 
     if keyboard_menu.key_pressed("G"):
-        next_level = play_lev1p1(mage_matrix, gray_matrix)
+        next_level = play_lev1p1(mage_matrix[:][:], gray_matrix)
 
         if next_level:
-            play_lev1p2(mage_matrix, gray_matrix)
+            play_lev1p2(mage_matrix[:][:], gray_matrix)
 
 
 
