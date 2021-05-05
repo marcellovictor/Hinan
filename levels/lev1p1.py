@@ -57,7 +57,7 @@ def play_lev1p1(character_matrix, enemy1_matrix):
     crono_jump = 0
 
 
-    # ///-----enemy1 settings-----///
+    """# ///-----enemy1 settings-----///
     enemy1_matrix[0][1].set_total_duration(1000)
     enemy1_matrix[0][0].set_total_duration(1000)
     enemy1_matrix[1][1].set_total_duration(1000)
@@ -78,7 +78,7 @@ def play_lev1p1(character_matrix, enemy1_matrix):
     enemy1_looking_right = True
 
     # enemy1 physics
-    enemy1_speed_x = 30 * 0.01
+    enemy1_speed_x = 30 * 0.01"""
 
     # ///-----projectiles settings-----///
     mage_fire = Sprite("images\\fire1.png")
@@ -86,12 +86,12 @@ def play_lev1p1(character_matrix, enemy1_matrix):
     shoot_v = 250
     shoot_crono = 0
 
-    # ///-----enemy1 projectiles settings-----///
+    """# ///-----enemy1 projectiles settings-----///
     purplefire_right = Sprite("images\\purplefire_right.png")
     purplefire_left = Sprite("images\\purplefire_left.png")
     purplefire_shoots = []
     purplefire_shoot_v = 200
-    purplefire_shoot_crono = 0
+    purplefire_shoot_crono = 0"""
 
     while True:
         window_1_1.update()
@@ -107,7 +107,6 @@ def play_lev1p1(character_matrix, enemy1_matrix):
         # next level
         if character_matrix[0][0].x > window_1_1.width:
             return True
-            print(passou)
 
         # ///-----character walking moves-----///
         if keyboard_1_1.key_pressed("RIGHT") and keyboard_1_1.key_pressed("LEFT"):
@@ -125,13 +124,14 @@ def play_lev1p1(character_matrix, enemy1_matrix):
         if keyboard_1_1.key_pressed("LEFT"):
             looking_right = False
             walking = True
-            for i in character_matrix:
-                for j in i:
-                    j.x -= player_speed_x
+            if character_matrix[0][0].x > 0:
+                for i in character_matrix:
+                    for j in i:
+                        j.x -= player_speed_x
         if not keyboard_1_1.key_pressed("RIGHT") and not keyboard_1_1.key_pressed("LEFT"):
             walking = False
 
-        if enemy1_life > 0:
+        """if enemy1_life > 0:
             # ///-----enemy1 walking moves-----///
             for i in enemy1_matrix:
                     for j in i:
@@ -141,7 +141,7 @@ def play_lev1p1(character_matrix, enemy1_matrix):
                 enemy1_looking_right = True
             if enemy1_matrix[0][0].x + enemy1_matrix[0][0].width > window_1_1.width:
                 enemy1_speed_x *= -1
-                enemy1_looking_right = False
+                enemy1_looking_right = False"""
 
         # ///-----gravity-----///
         """if not ground_colliding(character_matrix, pink_ground_lev1p1) and not jumping:
@@ -210,7 +210,7 @@ def play_lev1p1(character_matrix, enemy1_matrix):
                     j.y = character_matrix[0][0].y"""
 
 
-        if enemy1_life > 0:
+        """if enemy1_life > 0:
             # ///-----enemy1 drawings-----///
             if enemy1_looking_right:
                 if enemy1_walking:
@@ -226,7 +226,7 @@ def play_lev1p1(character_matrix, enemy1_matrix):
             # ///-----enemy1 update-----///
             for i in enemy1_matrix:
                 for j in i:
-                    j.update()
+                    j.update()"""
 
 
         # ///-----projectiles settings-----///
@@ -251,11 +251,11 @@ def play_lev1p1(character_matrix, enemy1_matrix):
         for s in shoots:
             if s[1] > window_1_1.width or s[1] < 0 - s[0].width:
                 shoots.remove(s)
-            if (s[1] - 1) < enemy1_matrix[0][0].x < (s[1] + 1) or (s[1] - 1) < (enemy1_matrix[0][0].x + enemy1_matrix[0][0].width) < (s[1] + 1):
+            """if (s[1] - 1) < enemy1_matrix[0][0].x < (s[1] + 1) or (s[1] - 1) < (enemy1_matrix[0][0].x + enemy1_matrix[0][0].width) < (s[1] + 1):
                 if enemy1_matrix[0][0].y < s[2] < enemy1_matrix[0][0].y + enemy1_matrix[0][0].height:
                     shoots.remove(s)
                     #enemy1 taking damage
-                    enemy1_life -= 1
+                    enemy1_life -= 1"""
 
         # projectile drawings
         for s in shoots:
@@ -264,7 +264,7 @@ def play_lev1p1(character_matrix, enemy1_matrix):
             sho.y = s[2]
             sho.draw()
 
-        if enemy1_life > 0:
+        """if enemy1_life > 0:
             # ///-----enemy1 projectiles settings-----///
             # enemy1 shooting
             if purplefire_shoot_crono >= 2.1:
@@ -299,4 +299,4 @@ def play_lev1p1(character_matrix, enemy1_matrix):
                 sho = s[0]
                 sho.x = s[1]
                 sho.y = s[2]
-                sho.draw()
+                sho.draw()"""

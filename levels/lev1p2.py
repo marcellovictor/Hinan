@@ -17,6 +17,9 @@ def play_lev1p2(character_matrix, enemy1_matrix):
     pink_ground_lev1p2 = Sprite("images\\pink_ground_lev1p1.png")
     pink_ground_lev1p2.y = 540
 
+    pinkosa = Sprite("images\\smallpink.png")
+    pinkosa.y = 480
+
     # game images (a implementar---//---)
     #//////////////////
 
@@ -47,13 +50,26 @@ def play_lev1p2(character_matrix, enemy1_matrix):
 
     crono_jump = 0
 
+    # ///-----projectiles settings-----///
+    mage_fire = Sprite("images\\fire1.png")
+    shoots = []
+    shoot_v = 250
+    shoot_crono = 0
+
     while True:
         window_1_2.update()
         window_1_2.set_background_color((100, 100, 100))
 
         # pinks
         pink_ground_lev1p2.draw()
+        pinkosa.draw()
 
+        # game images
+        # //////////////////////////
+
+        # next level
+        if character_matrix[0][0].x > window_1_2.width:
+            return True
 
         # ///-----character walking moves-----///
         if keyboard_1_2.key_pressed("RIGHT") and keyboard_1_2.key_pressed("LEFT"):
@@ -71,9 +87,10 @@ def play_lev1p2(character_matrix, enemy1_matrix):
         if keyboard_1_2.key_pressed("LEFT"):
             looking_right = False
             walking = True
-            for i in character_matrix:
-                for j in i:
-                    j.x -= player_speed_x
+            if character_matrix[0][0].x > 0:
+                for i in character_matrix:
+                    for j in i:
+                        j.x -= player_speed_x
         if not keyboard_1_2.key_pressed("RIGHT") and not keyboard_1_2.key_pressed("LEFT"):
             walking = False
 
@@ -88,6 +105,10 @@ def play_lev1p2(character_matrix, enemy1_matrix):
         if character_matrix[0][0].y + character_matrix[0][0].height >= pink_ground_lev1p2.y and not jumping:
             player_speed_y = 0
 
+        # pinkosa collision
+        if (character_matrix[0][0].y + character_matrix[0][0].height >= pinkosa.y and character_matrix[0][0].y + character_matrix[0][0].height <= pinkosa.y + pinkosa.height) and (character_matrix[0][0].x > pinkosa.x - 10 and character_matrix[0][0].x < pinkosa.x + pinkosa.width) and not jumping:
+            player_speed_y = 0
+    
         # ///-----jump-----///
         crono_jump += window_1_2.delta_time()
         if keyboard_1_2.key_pressed("SPACE") and crono_jump > 0.7:
@@ -127,3 +148,40 @@ def play_lev1p2(character_matrix, enemy1_matrix):
         for i in character_matrix:
             for j in i:
                 j.update()
+
+        # character positioning
+        for i in character_matrix:
+                for j in i:
+                    j.x = character_matrix[0][0].x
+                    j.y = character_matrix[0][0].y
+
+
+        # ///-----projectiles settings-----///
+        # shooting
+        if keyboard_1_2.key_pressed("q") and shoot_crono >= 0.5:
+            shoot_crono = 0
+            if looking_right:
+                shoot = [Sprite("images\\fire1.png"), character_matrix[0][0].x+30, character_matrix[0][0].y+60, "right"]
+            else:
+                shoot = [Sprite("images\\fire1.png"), character_matrix[0][0].x-20, character_matrix[0][0].y+60, "left"]
+            shoots.append(shoot)
+
+        # shoots movements
+        for s in shoots:
+            if s[3] == "right":
+                s[1] += shoot_v * window_1_2.delta_time()
+            else:
+                s[1] -= shoot_v * window_1_2.delta_time()
+        shoot_crono += window_1_2.delta_time()
+
+        # deactivate shoots
+        for s in shoots:
+            if s[1] > window_1_2.width or s[1] < 0 - s[0].width:
+                shoots.remove(s)
+
+        # projectile drawings
+        for s in shoots:
+            sho = s[0]
+            sho.x = s[1]
+            sho.y = s[2]
+            sho.draw()
