@@ -15,14 +15,17 @@ keyboard_menu = Keyboard()
 [j0: left][j1: right]
 i = 0: just standing
 i = 1: walking
+i = 2: attacking
 """
 # Characters Matrix
 
 mage_matrix = [[Sprite("images\\mage_left.png", 1), Sprite("images\\mage_right.png", 1)],
-    [Sprite("images\\full_walk_mage_left.png", 6), Sprite("images\\full_walk_mage_right.png", 6)]]
+    [Sprite("images\\full_walk_mage_left.png", 6), Sprite("images\\full_walk_mage_right.png", 6)],
+    [Sprite("images\\mage_attacking_left.png", 7), Sprite("images\\mage_attacking_right.png", 7)]]
 
 knight_matrix = [[Sprite("images\\horn_left.png", 1), Sprite("images\\horn_right.png", 1)],
-    [Sprite("images\\horn_walking_left.png", 10), Sprite("images\\horn_walking_right.png", 10)]]
+    [Sprite("images\\horn_walking_left.png", 10), Sprite("images\\horn_walking_right.png", 10)],
+    [Sprite("images\\horn_attacking_left.png", 10), Sprite("images\\horn_attacking_right.png", 10)]]
 
 gray_matrix = [[Sprite("images\\gray_left.png", 1), Sprite("images\\gray_right.png", 1)],
     [Sprite("images\\full_walk_gray_left.png", 9), Sprite("images\\full_walk_gray_right.png", 9)]]

@@ -31,14 +31,23 @@ def play_lev1p2(character_matrix, knight_matrix):
     character_matrix[0][0].set_total_duration(1000)
     character_matrix[1][1].set_total_duration(1000)
     character_matrix[1][0].set_total_duration(1000)
+    character_matrix[2][1].set_total_duration(500)
+    character_matrix[2][0].set_total_duration(500)
 
 
     charachter_life = 5
+
+    crono_attacking = 0
+
+    # causing damage
+    crono_knight_damaging = 0
+
     # states
     walking = False
     jumping = False
     attacking = False
     looking_right = True
+    invincible = False
 
     # character physics
     player_speed_x = 70 * 0.01
@@ -54,6 +63,8 @@ def play_lev1p2(character_matrix, knight_matrix):
     knight_matrix[0][0].set_total_duration(1000)
     knight_matrix[1][1].set_total_duration(1000)
     knight_matrix[1][0].set_total_duration(1000)
+    knight_matrix[2][1].set_total_duration(1000)
+    knight_matrix[2][0].set_total_duration(1000)
 
     for i in knight_matrix:
         for j in i:
@@ -62,6 +73,8 @@ def play_lev1p2(character_matrix, knight_matrix):
 
 
     knight_life = 2
+
+    crono_knight_attack = 0
 
     # knight states
     knight_walking = True
@@ -166,15 +179,21 @@ def play_lev1p2(character_matrix, knight_matrix):
         window_1_2.draw_text(f"Vidas: {charachter_life}", 10, 10, size=15, color=(100, 100, 100))
 
         if looking_right:
-            if walking:
-                character_matrix[1][1].draw()
+            if attacking:
+                character_matrix[2][1].draw()
             else:
-                character_matrix[0][1].draw()
+                if walking:
+                    character_matrix[1][1].draw()
+                else:
+                    character_matrix[0][1].draw()
         if not looking_right:
-            if walking:
-                character_matrix[1][0].draw()
+            if attacking:
+                character_matrix[2][0].draw()
             else:
-                character_matrix[0][0].draw()
+                if walking:
+                    character_matrix[1][0].draw()
+                else:
+                    character_matrix[0][0].draw()
 
         # ///-----character update-----///
         for i in character_matrix:
@@ -191,20 +210,38 @@ def play_lev1p2(character_matrix, knight_matrix):
         if knight_life > 0:
             # ///-----knight drawings-----///
             if knight_looking_right:
-                if knight_walking:
+                if knight_walking and not knight_attacking:
                     knight_matrix[1][1].draw()
                 else:
-                    knight_matrix[0][1].draw()
+                    knight_matrix[2][1].draw()
             if not knight_looking_right:
-                if knight_walking:
+                if knight_walking and not knight_attacking:
                     knight_matrix[1][0].draw()
                 else:
-                    knight_matrix[0][0].draw()
+                    knight_matrix[2][0].draw()
 
             # ///-----knight update-----///
             for i in knight_matrix:
                 for j in i:
                     j.update()
+
+
+        # ///-----attacking settings-----///
+        crono_attacking += window_1_2.delta_time()
+        if keyboard_1_2.key_pressed("w") and crono_attacking >= 0.5:
+            crono_attacking = 0
+            attacking = True
+        if crono_attacking >= 0.5:
+            attacking = False
+
+        # causing knight damage
+        if attacking and ((knight_matrix[0][0].x < character_matrix[0][0].x < knight_matrix[0][0].x + knight_matrix[0][0].width) and (knight_matrix[0][0].y + knight_matrix[0][0].height > character_matrix[0][0].y > knight_matrix[0][0].y)):
+            crono_knight_damaging += window_1_2.delta_time()
+            if crono_knight_damaging >= 0.45:
+                knight_life -= 1
+                crono_knight_damaging = 0
+        else:
+            crono_knight_damaging = 0
 
         # ///-----projectiles settings-----///
         # shooting
@@ -228,11 +265,12 @@ def play_lev1p2(character_matrix, knight_matrix):
         for s in shoots:
             if s[1] > window_1_2.width or s[1] < 0 - s[0].width:
                 shoots.remove(s)
-            if (s[1] - 1) < knight_matrix[0][0].x < (s[1] + 1) or (s[1] - 1) < (knight_matrix[0][0].x + knight_matrix[0][0].width) < (s[1] + 1):
-                if knight_matrix[0][0].y < s[2] < knight_matrix[0][0].y + knight_matrix[0][0].height:
-                    shoots.remove(s)
-                    #knight taking damage
-                    knight_life -= 1
+            #knight taking damage
+            if knight_life > 0:
+                if (s[1] - 1) < knight_matrix[0][0].x < (s[1] + 1) or (s[1] - 1) < (knight_matrix[0][0].x + knight_matrix[0][0].width) < (s[1] + 1):
+                    if knight_matrix[0][0].y < s[2] < knight_matrix[0][0].y + knight_matrix[0][0].height:
+                        shoots.remove(s)
+                        knight_life -= 1
 
 
         # projectile drawings
@@ -241,3 +279,15 @@ def play_lev1p2(character_matrix, knight_matrix):
             sho.x = s[1]
             sho.y = s[2]
             sho.draw()
+
+
+        # ///-----knight attacking settings-----///
+        if (knight_matrix[0][0].x < character_matrix[0][0].x < knight_matrix[0][0].x + knight_matrix[0][0].width) and (knight_matrix[0][0].y + knight_matrix[0][0].height > character_matrix[0][0].y > knight_matrix[0][0].y) :
+            knight_attacking = True
+            crono_knight_attack += window_1_2.delta_time()
+            if crono_knight_attack >= 1 and not invincible:
+                crono_knight_attack = 0
+                charachter_life -= 1
+        else:
+            knight_attacking = False
+            crono_knight_attack = 0

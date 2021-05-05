@@ -49,9 +49,14 @@ def play_lev1p1(character_matrix):
     character_matrix[0][0].set_total_duration(1000)
     character_matrix[1][1].set_total_duration(1000)
     character_matrix[1][0].set_total_duration(1000)
+    character_matrix[2][1].set_total_duration(500)
+    character_matrix[2][0].set_total_duration(500)
 
 
     charachter_life = 5
+
+    crono_attacking = 0
+
     # states
     walking = False
     jumping = False
@@ -210,15 +215,21 @@ def play_lev1p1(character_matrix):
         window_1_1.draw_text(f"Vidas: {charachter_life}", 10, 10, size=15, color=(100, 100, 100))
 
         if looking_right:
-            if walking:
-                character_matrix[1][1].draw()
+            if attacking:
+                character_matrix[2][1].draw()
             else:
-                character_matrix[0][1].draw()
+                if walking:
+                    character_matrix[1][1].draw()
+                else:
+                    character_matrix[0][1].draw()
         if not looking_right:
-            if walking:
-                character_matrix[1][0].draw()
+            if attacking:
+                character_matrix[2][0].draw()
             else:
-                character_matrix[0][0].draw()
+                if walking:
+                    character_matrix[1][0].draw()
+                else:
+                    character_matrix[0][0].draw()
 
         # ///-----character update-----///
         for i in character_matrix:
@@ -249,6 +260,15 @@ def play_lev1p1(character_matrix):
             for i in enemy1_matrix:
                 for j in i:
                     j.update()"""
+
+
+        # ///-----attacking settings-----///
+        crono_attacking += window_1_1.delta_time()
+        if keyboard_1_1.key_pressed("w") and crono_attacking >= 0.5:
+            crono_attacking = 0
+            attacking = True
+        if crono_attacking >= 0.5:
+            attacking = False
 
 
         # ///-----projectiles settings-----///
