@@ -21,6 +21,9 @@ i = 1: walking
 mage_matrix = [[Sprite("images\\mage_left.png", 1), Sprite("images\\mage_right.png", 1)],
     [Sprite("images\\full_walk_mage_left.png", 6), Sprite("images\\full_walk_mage_right.png", 6)]]
 
+knight_matrix = [[Sprite("images\\horn_left.png", 1), Sprite("images\\horn_right.png", 1)],
+    [Sprite("images\\horn_walking_left.png", 10), Sprite("images\\horn_walking_right.png", 10)]]
+
 gray_matrix = [[Sprite("images\\gray_left.png", 1), Sprite("images\\gray_right.png", 1)],
     [Sprite("images\\full_walk_gray_left.png", 9), Sprite("images\\full_walk_gray_right.png", 9)]]
 
@@ -31,10 +34,10 @@ while True:
     menu.draw_text('Press "G" to start!', 100, 200, 42, (255, 255, 255))
 
     if keyboard_menu.key_pressed("G"):
-        next_level = play_lev1p1(mage_matrix[:][:], gray_matrix)
+        next_level = play_lev1p1(mage_matrix[:][:])
 
         if next_level:
-            play_lev1p2(mage_matrix[:][:], gray_matrix)
+            play_lev1p2(mage_matrix[:][:], knight_matrix[:][:])
 
 
 

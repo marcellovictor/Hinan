@@ -3,7 +3,7 @@ from PPlay.keyboard import *
 from PPlay.sprite import *
 from PPlay.gameimage import *
 
-def play_lev1p2(character_matrix, enemy1_matrix):
+def play_lev1p2(character_matrix, knight_matrix):
     # ///-----window and keyboard-----///
     window_1_2 = Window(800, 600)
     window_1_2.set_title("Level 1 - part 2")
@@ -17,11 +17,9 @@ def play_lev1p2(character_matrix, enemy1_matrix):
     pink_ground_lev1p2 = Sprite("images\\pink_ground_lev1p1.png")
     pink_ground_lev1p2.y = 540
 
-    pinkosa = Sprite("images\\smallpink.png")
-    pinkosa.y = 480
 
-    # game images (a implementar---//---)
-    #//////////////////
+    # game images
+    map_lev1p2 = Sprite("images\\map_lev1p2.jpg")
 
     # ///-----character settings-----///
     for i in character_matrix:
@@ -50,6 +48,30 @@ def play_lev1p2(character_matrix, enemy1_matrix):
 
     crono_jump = 0
 
+
+    # ///-----knight settings-----///
+    knight_matrix[0][1].set_total_duration(1000)
+    knight_matrix[0][0].set_total_duration(1000)
+    knight_matrix[1][1].set_total_duration(1000)
+    knight_matrix[1][0].set_total_duration(1000)
+
+    for i in knight_matrix:
+        for j in i:
+            j.x = 500
+            j.y = 400
+
+
+    knight_life = 2
+
+    # knight states
+    knight_walking = True
+    knight_jumping = False
+    knight_attacking = False
+    knight_looking_right = True
+
+    # knight physics
+    knight_speed_x = 15 * 0.01
+
     # ///-----projectiles settings-----///
     mage_fire = Sprite("images\\fire1.png")
     shoots = []
@@ -62,10 +84,10 @@ def play_lev1p2(character_matrix, enemy1_matrix):
 
         # pinks
         pink_ground_lev1p2.draw()
-        pinkosa.draw()
 
         # game images
-        # //////////////////////////
+        map_lev1p2.draw()
+
 
         # next level
         if character_matrix[0][0].x > window_1_2.width:
@@ -94,6 +116,19 @@ def play_lev1p2(character_matrix, enemy1_matrix):
         if not keyboard_1_2.key_pressed("RIGHT") and not keyboard_1_2.key_pressed("LEFT"):
             walking = False
 
+
+        if knight_life > 0:
+            # ///-----knight walking moves-----///
+            for i in knight_matrix:
+                    for j in i:
+                        j.x += knight_speed_x
+            if knight_matrix[0][0].x <= window_1_2.width/2:
+                knight_speed_x *= -1
+                knight_looking_right = True
+            if knight_matrix[0][0].x + knight_matrix[0][0].width > window_1_2.width:
+                knight_speed_x *= -1
+                knight_looking_right = False
+
         # ///-----gravity-----///
 
         if character_matrix[0][0].y + character_matrix[0][0].height < pink_ground_lev1p2.y and not jumping:
@@ -105,9 +140,6 @@ def play_lev1p2(character_matrix, enemy1_matrix):
         if character_matrix[0][0].y + character_matrix[0][0].height >= pink_ground_lev1p2.y and not jumping:
             player_speed_y = 0
 
-        # pinkosa collision
-        if (character_matrix[0][0].y + character_matrix[0][0].height >= pinkosa.y and character_matrix[0][0].y + character_matrix[0][0].height <= pinkosa.y + pinkosa.height) and (character_matrix[0][0].x > pinkosa.x - 10 and character_matrix[0][0].x < pinkosa.x + pinkosa.width) and not jumping:
-            player_speed_y = 0
     
         # ///-----jump-----///
         crono_jump += window_1_2.delta_time()
@@ -156,6 +188,24 @@ def play_lev1p2(character_matrix, enemy1_matrix):
                     j.y = character_matrix[0][0].y
 
 
+        if knight_life > 0:
+            # ///-----knight drawings-----///
+            if knight_looking_right:
+                if knight_walking:
+                    knight_matrix[1][1].draw()
+                else:
+                    knight_matrix[0][1].draw()
+            if not knight_looking_right:
+                if knight_walking:
+                    knight_matrix[1][0].draw()
+                else:
+                    knight_matrix[0][0].draw()
+
+            # ///-----knight update-----///
+            for i in knight_matrix:
+                for j in i:
+                    j.update()
+
         # ///-----projectiles settings-----///
         # shooting
         if keyboard_1_2.key_pressed("q") and shoot_crono >= 0.5:
@@ -178,6 +228,12 @@ def play_lev1p2(character_matrix, enemy1_matrix):
         for s in shoots:
             if s[1] > window_1_2.width or s[1] < 0 - s[0].width:
                 shoots.remove(s)
+            if (s[1] - 1) < knight_matrix[0][0].x < (s[1] + 1) or (s[1] - 1) < (knight_matrix[0][0].x + knight_matrix[0][0].width) < (s[1] + 1):
+                if knight_matrix[0][0].y < s[2] < knight_matrix[0][0].y + knight_matrix[0][0].height:
+                    shoots.remove(s)
+                    #knight taking damage
+                    knight_life -= 1
+
 
         # projectile drawings
         for s in shoots:

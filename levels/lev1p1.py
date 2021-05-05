@@ -15,7 +15,7 @@ from PPlay.gameimage import *
 
 
 
-def play_lev1p1(character_matrix, enemy1_matrix):
+def play_lev1p1(character_matrix):
     # ///-----window and keyboard-----///
     window_1_1 = Window(800, 600)
     window_1_1.set_title("Level 1 - part 1")
@@ -29,9 +29,19 @@ def play_lev1p1(character_matrix, enemy1_matrix):
     pink_ground_lev1p1 = Sprite("images\\pink_ground_lev1p1.png")
     pink_ground_lev1p1.y = 540
 
+    pink_1_1_1 = Sprite("images\\smallpink.png")
+    pink_1_1_1.x = 465
+    pink_1_1_1.y = 440
+
+    pink_1_1_2 = Sprite("images\\micropink.png")
+    pink_1_1_2.x = 590
+    pink_1_1_2.y = 395
+    
+
     # game images
     ground_lev1p1 = GameImage("images\\ground_lev1p1.png")
     background_lev1p1 = GameImage("images\\background_lev1p1.jpg")
+    map_lev1p1 = GameImage("images\\map_lev1p1.jpg")
 
 
     # ///-----character settings-----///
@@ -99,10 +109,14 @@ def play_lev1p1(character_matrix, enemy1_matrix):
 
         # pinks
         pink_ground_lev1p1.draw()
+        pink_1_1_1.draw()
+        pink_1_1_2.draw()
 
         # game images
-        background_lev1p1.draw()
-        ground_lev1p1.draw()
+        #background_lev1p1.draw()
+        #ground_lev1p1.draw()
+        map_lev1p1.draw()
+        
 
         # next level
         if character_matrix[0][0].x > window_1_1.width:
@@ -162,6 +176,14 @@ def play_lev1p1(character_matrix, enemy1_matrix):
         if character_matrix[0][0].y + character_matrix[0][0].height >= pink_ground_lev1p1.y and not jumping:
             player_speed_y = 0
 
+        # pink_1_1_1
+        if (character_matrix[0][0].y + character_matrix[0][0].height >= pink_1_1_1.y and character_matrix[0][0].y + character_matrix[0][0].height <= pink_1_1_1.y + pink_1_1_1.height) and (character_matrix[0][0].x > pink_1_1_1.x - 10 and character_matrix[0][0].x < pink_1_1_1.x + pink_1_1_1.width) and not jumping:
+            player_speed_y = 0
+
+        # pink_1_1_2
+        if (character_matrix[0][0].y + character_matrix[0][0].height >= pink_1_1_2.y and character_matrix[0][0].y + character_matrix[0][0].height <= pink_1_1_2.y + pink_1_1_2.height) and (character_matrix[0][0].x > pink_1_1_2.x - 10 and character_matrix[0][0].x < pink_1_1_2.x + pink_1_1_2.width) and not jumping:
+            player_speed_y = 0
+
         # ///-----jump-----///
         crono_jump += window_1_1.delta_time()
         if keyboard_1_1.key_pressed("SPACE") and crono_jump > 0.7:
@@ -203,11 +225,11 @@ def play_lev1p1(character_matrix, enemy1_matrix):
             for j in i:
                 j.update()
 
-        """# character positioning
+        # character positioning
         for i in character_matrix:
                 for j in i:
                     j.x = character_matrix[0][0].x
-                    j.y = character_matrix[0][0].y"""
+                    j.y = character_matrix[0][0].y
 
 
         """if enemy1_life > 0:
