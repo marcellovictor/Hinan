@@ -5,6 +5,7 @@ from PPlay.gameimage import *
 
 from levels.lev1p1 import *
 from levels.lev1p2 import *
+from levels.lev1p3 import *
 
 menu = Window(800, 600)
 menu.set_title("Main Menu")
@@ -39,8 +40,13 @@ while True:
     if keyboard_menu.key_pressed("G"):
         next_level = play_lev1p1(mage_matrix[:][:])
 
-        if next_level:
-            play_lev1p2(mage_matrix[:][:], knight_matrix[:][:])
+    if next_level:
+        next_level = play_lev1p2(mage_matrix[:][:], knight_matrix[:][:])
+
+    if next_level:
+        play_lev1p3(mage_matrix[:][:])
+
+
 
 
 

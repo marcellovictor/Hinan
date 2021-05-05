@@ -24,8 +24,8 @@ def play_lev1p2(character_matrix, knight_matrix):
     # ///-----character settings-----///
     for i in character_matrix:
         for j in i:
-            j.x = 40
-            j.y = 100
+            j.x = 28
+            j.y = 410
 
     character_matrix[0][1].set_total_duration(1000)
     character_matrix[0][0].set_total_duration(1000)
@@ -94,6 +94,7 @@ def play_lev1p2(character_matrix, knight_matrix):
     while True:
         window_1_2.update()
         window_1_2.set_background_color((100, 100, 100))
+
 
         # pinks
         pink_ground_lev1p2.draw()

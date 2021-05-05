@@ -45,6 +45,11 @@ def play_lev1p1(character_matrix):
 
 
     # ///-----character settings-----///
+    for i in character_matrix:
+        for j in i:
+            j.x = 144
+            j.y = 410
+
     character_matrix[0][1].set_total_duration(1000)
     character_matrix[0][0].set_total_duration(1000)
     character_matrix[1][1].set_total_duration(1000)
