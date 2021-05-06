@@ -13,6 +13,20 @@ def play_lev1p2(character_matrix, knight_matrix):
     # ///-----map settings-----///
     gravity = 0.5 * 0.01
 
+    # tutorial baloons
+    fala4 = GameImage("images\\fala4.png")
+    fala5 = GameImage("images\\fala5.png")
+    fala6 = GameImage("images\\fala6.png")
+
+    fala4.x = 100
+    fala4.y = 100
+    fala5.x = fala4.x + fala4.width + 20
+    fala5.y = fala4.y
+    fala6.x = fala5.x + fala5.width + 20
+    fala6.y = fala5.y
+
+    crono_tutorial2 = 0
+
     # pinks
     pink_ground_lev1p2 = Sprite("images\\pink_ground_lev1p1.png")
     pink_ground_lev1p2.y = 540
@@ -222,6 +236,14 @@ def play_lev1p2(character_matrix, knight_matrix):
                     j.x = character_matrix[0][0].x
                     j.y = character_matrix[0][0].y
 
+
+        # NPC drawing
+        crono_tutorial2 += window_1_2.delta_time()
+        if crono_tutorial2 > 14:
+            fala6.draw()
+        if crono_tutorial2 > 7:
+            fala5.draw()
+        fala4.draw()
 
         if knight_life > 0:
             # ///-----knight drawings-----///

@@ -6,7 +6,7 @@ from PPlay.gameimage import *
 def play_lev2p1(character_matrix, knight_matrix, gray_matrix):
     # ///-----window and keyboard-----///
     window_2_1 = Window(800, 600)
-    window_2_1.set_title("Level 1 - part 2")
+    window_2_1.set_title("Level 2 - part 1")
 
     keyboard_2_1 = Keyboard()
 

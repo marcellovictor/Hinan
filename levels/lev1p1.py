@@ -22,6 +22,7 @@ def play_lev1p1(character_matrix):
 
     keyboard_1_1 = Keyboard()
 
+
     # ///-----map settings-----///
     gravity = 0.5 * 0.01
 
@@ -32,6 +33,18 @@ def play_lev1p1(character_matrix):
     sage = Sprite("images\\sage.png")
     sage.x = 50
     sage.y = 450
+
+    # tutorial baloons
+    fala1 = GameImage("images\\fala1.png")
+    fala2 = GameImage("images\\fala2.png")
+    fala3 = GameImage("images\\fala3.png")
+
+    fala1.x = sage.x + sage.width - 40
+    fala1.y = sage.y - 100
+    fala2.x = fala1.x
+    fala2.y = fala1.y
+    fala3.x = fala1.x
+    fala3.y = fala1.y
 
     crono_tutorial = 0
 
@@ -274,7 +287,14 @@ def play_lev1p1(character_matrix):
 
 
         # NPC drawing
+        crono_tutorial += window_1_1.delta_time()
         sage.draw()
+        if crono_tutorial <= 50:
+            fala3.draw()
+        if crono_tutorial <= 20:
+            fala2.draw()
+        if crono_tutorial <= 10:
+            fala1.draw()
 
         """if enemy1_life > 0:
             # ///-----enemy1 drawings-----///

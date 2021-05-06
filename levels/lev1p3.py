@@ -13,6 +13,18 @@ def play_lev1p3(character_matrix, gray_matrix):
     # ///-----map settings-----///
     gravity = 0.5 * 0.01
 
+    # tutorial baloons
+    fala7 = GameImage("images\\fala7.png")
+    fala8 = GameImage("images\\fala8.png")
+
+    fala7.x = 100
+    fala7.y = 100
+    fala8.x = fala7.x + fala7.width + 20
+    fala8.y = fala7.y
+    
+
+    crono_tutorial3 = 0
+
     # pinks
     pink_ground_lev1p3 = Sprite("images\\pink_ground_lev1p1.png")
     pink_ground_lev1p3.y = 540
@@ -228,6 +240,13 @@ def play_lev1p3(character_matrix, gray_matrix):
                     j.x = character_matrix[0][0].x
                     j.y = character_matrix[0][0].y
 
+
+        # NPC drawing
+        crono_tutorial3 += window_1_3.delta_time()
+        if crono_tutorial3 > 7:
+            fala8.draw()
+        fala7.draw()
+        
 
         if gray_life > 0:
             # ///-----gray drawings-----///
