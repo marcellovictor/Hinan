@@ -68,9 +68,15 @@ def play_lev1p1(character_matrix):
     character_matrix[2][0].set_total_duration(500)
 
 
-    charachter_life = 5
+    character_life = 5
 
     crono_attacking = 0
+
+    vida1 = GameImage("images\\1vida.jpg")
+    vida2 = GameImage("images\\2vidas.jpg")
+    vida3 = GameImage("images\\3vidas.jpg")
+    vida4 = GameImage("images\\4vidas.jpg")
+    vida5 = GameImage("images\\5vidas.jpg")
 
     # states
     walking = False
@@ -79,7 +85,7 @@ def play_lev1p1(character_matrix):
     looking_right = True
 
     # character physics
-    player_speed_x = 70 * 0.01
+    player_speed_x = 50 * 0.01
     player_speed_y = 0
     initial_jump_y = character_matrix[0][0].y
     delta_jump = 200
@@ -227,7 +233,16 @@ def play_lev1p1(character_matrix):
         
 
         # ///-----character drawings-----///
-        window_1_1.draw_text(f"Vidas: {charachter_life}", 10, 10, size=15, color=(100, 100, 100))
+        if character_life == 5:
+            vida5.draw()
+        if character_life == 4:
+            vida4.draw()
+        if character_life == 3:
+            vida3.draw()
+        if character_life == 2:
+            vida2.draw()
+        if character_life == 1:
+            vida1.draw()
 
         if looking_right:
             if attacking:

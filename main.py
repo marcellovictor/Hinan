@@ -7,6 +7,8 @@ from levels.lev1p1 import *
 from levels.lev1p2 import *
 from levels.lev1p3 import *
 
+from levels.lev2p1 import *
+
 menu = Window(800, 600)
 menu.set_title("Main Menu")
 
@@ -44,7 +46,10 @@ while True:
         next_level = play_lev1p2(mage_matrix[:][:], knight_matrix[:][:])
 
     if next_level:
-        play_lev1p3(mage_matrix[:][:], gray_matrix[:][:])
+        next_level = play_lev1p3(mage_matrix[:][:], gray_matrix[:][:])
+
+    if next_level:
+        next_level = play_lev2p1(mage_matrix[:][:], knight_matrix[:][:], gray_matrix[:][:])
 
 
 

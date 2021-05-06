@@ -6,7 +6,7 @@ from PPlay.gameimage import *
 def play_lev1p3(character_matrix, gray_matrix):
     # ///-----window and keyboard-----///
     window_1_3 = Window(800, 600)
-    window_1_3.set_title("Level 1 - part 2")
+    window_1_3.set_title("Level 1 - part 3")
 
     keyboard_1_3 = Keyboard()
 
@@ -56,7 +56,7 @@ def play_lev1p3(character_matrix, gray_matrix):
     invincible = False
 
     # character physics
-    player_speed_x = 70 * 0.01
+    player_speed_x = 50 * 0.01
     player_speed_y = 0
     initial_jump_y = character_matrix[0][0].y
     delta_jump = 200
