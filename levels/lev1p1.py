@@ -25,6 +25,16 @@ def play_lev1p1(character_matrix):
     # ///-----map settings-----///
     gravity = 0.5 * 0.01
 
+    # tutorial
+    jeweler = Sprite("images\\jeweler.png")
+    jeweler.x = 50
+    jeweler.y = 450
+    sage = Sprite("images\\sage.png")
+    sage.x = 50
+    sage.y = 450
+
+    crono_tutorial = 0
+
     # pinks
     pink_ground_lev1p1 = Sprite("images\\pink_ground_lev1p1.png")
     pink_ground_lev1p1.y = 540
@@ -247,6 +257,9 @@ def play_lev1p1(character_matrix):
                     j.x = character_matrix[0][0].x
                     j.y = character_matrix[0][0].y
 
+
+        # NPC drawing
+        sage.draw()
 
         """if enemy1_life > 0:
             # ///-----enemy1 drawings-----///

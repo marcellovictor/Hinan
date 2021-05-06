@@ -44,7 +44,7 @@ while True:
         next_level = play_lev1p2(mage_matrix[:][:], knight_matrix[:][:])
 
     if next_level:
-        play_lev1p3(mage_matrix[:][:])
+        play_lev1p3(mage_matrix[:][:], gray_matrix[:][:])
 
 
 
