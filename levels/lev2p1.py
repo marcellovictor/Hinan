@@ -2,8 +2,9 @@ from PPlay.window import *
 from PPlay.keyboard import *
 from PPlay.sprite import *
 from PPlay.gameimage import *
+from PPlay.sound import *
 
-def play_lev2p1(character_matrix, knight_matrix, gray_matrix):
+def play_lev2p1(character_matrix, knight_matrix, gray_matrix, sound_1_1):
     # ///-----window and keyboard-----///
     window_2_1 = Window(800, 600)
     window_2_1.set_title("Level 2 - part 1")
@@ -11,7 +12,7 @@ def play_lev2p1(character_matrix, knight_matrix, gray_matrix):
     keyboard_2_1 = Keyboard()
 
     # ///-----map settings-----///
-    gravity = 0.5 * 0.01
+    gravity = 0.18 * 0.01
 
     # pinks
     pink_ground_lev2p1 = Sprite("images\\pink_ground_lev1p1.png")
@@ -62,7 +63,7 @@ def play_lev2p1(character_matrix, knight_matrix, gray_matrix):
     invincible = False
 
     # character physics
-    player_speed_x = 50 * 0.01
+    player_speed_x = 25 * 0.01
     player_speed_y = 0
     initial_jump_y = character_matrix[0][0].y
     delta_jump = 200
@@ -154,6 +155,11 @@ def play_lev2p1(character_matrix, knight_matrix, gray_matrix):
         if character_matrix[0][0].x > window_2_1.width:
             return True
 
+        # or not
+        if character_life < 1:
+            sound_1_1.stop()
+            return False
+
         # ///-----character walking moves-----///
         if keyboard_2_1.key_pressed("RIGHT") and keyboard_2_1.key_pressed("LEFT"):
             looking_right = True
@@ -230,7 +236,7 @@ def play_lev2p1(character_matrix, knight_matrix, gray_matrix):
             jumping = True
 
         if jumping and player_speed_y == 0 and crono_jump < 0.2:
-            player_speed_y = 50 * 0.01
+            player_speed_y = 18 * 0.01
             initial_jump_y = character_matrix[0][0].y
 
         if jumping:
@@ -418,7 +424,7 @@ def play_lev2p1(character_matrix, knight_matrix, gray_matrix):
                     if character_matrix[0][0].y < s[2] < character_matrix[0][0].y + character_matrix[0][0].height:
                         purplefire_shoots.remove(s)
                         # character taking damage
-                        charachter_life -= 1
+                        character_life -= 1
 
 
             # gray projectile drawings

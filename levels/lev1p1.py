@@ -2,6 +2,7 @@ from PPlay.window import *
 from PPlay.keyboard import *
 from PPlay.sprite import *
 from PPlay.gameimage import *
+from PPlay.sound import *
 
 
 """def ground_colliding(character_matrix, ground):
@@ -15,7 +16,7 @@ from PPlay.gameimage import *
 
 
 
-def play_lev1p1(character_matrix):
+def play_lev1p1(character_matrix, sound_1_1):
     # ///-----window and keyboard-----///
     window_1_1 = Window(800, 600)
     window_1_1.set_title("Level 1 - part 1")
@@ -24,7 +25,7 @@ def play_lev1p1(character_matrix):
 
 
     # ///-----map settings-----///
-    gravity = 0.5 * 0.01
+    gravity = 0.18 * 0.01
 
     # tutorial
     jeweler = Sprite("images\\jeweler.png")
@@ -98,7 +99,7 @@ def play_lev1p1(character_matrix):
     looking_right = True
 
     # character physics
-    player_speed_x = 50 * 0.01
+    player_speed_x = 20 * 0.01
     player_speed_y = 0
     initial_jump_y = character_matrix[0][0].y
     delta_jump = 200
@@ -160,6 +161,11 @@ def play_lev1p1(character_matrix):
         # next level
         if character_matrix[0][0].x > window_1_1.width:
             return True
+
+        # or not
+        if character_life < 1:
+            sound_1_1.stop()
+            return False
 
         # ///-----character walking moves-----///
         if keyboard_1_1.key_pressed("RIGHT") and keyboard_1_1.key_pressed("LEFT"):
@@ -230,7 +236,7 @@ def play_lev1p1(character_matrix):
             jumping = True
         
         if jumping and player_speed_y == 0 and crono_jump < 0.2:
-            player_speed_y = 50 * 0.01
+            player_speed_y = 18 * 0.01
             initial_jump_y = character_matrix[0][0].y
 
         if jumping:
@@ -289,11 +295,11 @@ def play_lev1p1(character_matrix):
         # NPC drawing
         crono_tutorial += window_1_1.delta_time()
         sage.draw()
-        if crono_tutorial <= 50:
+        if crono_tutorial <= 40:
             fala3.draw()
-        if crono_tutorial <= 20:
+        if crono_tutorial <= 30:
             fala2.draw()
-        if crono_tutorial <= 10:
+        if crono_tutorial <= 20:
             fala1.draw()
 
         """if enemy1_life > 0:
